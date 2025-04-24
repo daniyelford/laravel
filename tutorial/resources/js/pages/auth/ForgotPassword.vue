@@ -4,11 +4,14 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm , Link} from '@inertiajs/vue3';
 
 defineProps({
     status: {
         type: String,
+    },
+    canRegister: {
+        type: Boolean,
     },
 });
 
@@ -56,6 +59,12 @@ const submit = () => {
             </div>
 
             <div class="mt-4 flex items-center justify-end">
+                <Link
+                :href="route('register')"
+                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                >
+                    Register
+                </Link>
                 <PrimaryButton
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"

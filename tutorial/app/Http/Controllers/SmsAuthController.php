@@ -1,16 +1,23 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Verification;
 use Illuminate\Support\Facades\Http;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Cache\RateLimiter;
 
 class SmsAuthController extends Controller
 {
+    protected $rateLimiter;
+
+    public function __construct(RateLimiter $rateLimiter)
+    {
+        $this->rateLimiter = $rateLimiter;
+    }
     public function sendCode(Request $request)
     {
         $request->validate([
@@ -18,7 +25,7 @@ class SmsAuthController extends Controller
         ]);
         $mobile = $request->mobile;
         $key = "send-code-{$mobile}";
-        if (RateLimiter::tooManyRequests($key, 2)) {
+        if ($this->rateLimiter->tooManyAttempts($key, 2)) {
             throw ValidationException::withMessages([
                 'mobile' => ['شما بیش از حد مجاز درخواست ارسال کد داشتید. لطفاً دقایقی دیگر تلاش کنید.']
             ]);
@@ -29,7 +36,7 @@ class SmsAuthController extends Controller
             ['code' => $code]
         );
         $this->sendSmsVerification($request->mobile, $code);
-        RateLimiter::hit($key, 120);
+        $this->rateLimiter->hit($key, 120);
         return response()->json(['message' => 'کد ارسال شد']);
     }
 
@@ -47,25 +54,31 @@ class SmsAuthController extends Controller
         $verify = Verification::where('mobile', $request->mobile)->where('code', $request->code)->first();
         if (!$verify) {
             Cache::put('verify_attempts_' . $request->mobile, $attempts + 1, now()->addMinutes(10));
-            return response()->json(['message' => 'کد نادرست است'], 422);
+            throw ValidationException::withMessages([
+                'code' => ['کد نادرست است.']
+            ]);
         }
         $verify->delete();
         Cache::forget('verify_attempts_' . $request->mobile);
-        return response()->json(['message' => 'ورود موفق!', 'user' => $verify->user]);
+        $user = User::where('mobile', $request->mobile)->first();
+        if (!$user) {
+            \Log::info("د$request->mobile");
+            return redirect()->route('register')->with('mobile', $request->mobile);
+        }
+        Auth::login($user);
+        return redirect()->intended('/dashboard');
     }
 
     private function sendSmsVerification($mobile, $code)
     {
-        Http::withToken(config('services.smsir.api_key'))
-            ->post('https://api.sms.ir/v1/send/verify', [
-                'mobile' => $mobile,
-                'templateId' => config('services.smsir.template_id'),
-                'parameters' => [
-                    [
-                        'name' => 'CODE',
-                        'value' => $code
-                    ]
-                ]
-            ]);
+        \Log::info("در حال ارسال SMS به $mobile با کد $code");
+        $response = Http::withToken(config('services.smsir.api_key'))
+        ->post('https://api.sms.ir/v1/send/verify', [
+            'mobile' => $mobile,
+            'templateId' => config('services.smsir.template_id'),
+            'parameters' => [
+                ['name' => 'CODE', 'value' => $code],
+            ],
+        ]);
     }
 }
