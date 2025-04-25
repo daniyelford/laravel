@@ -37,7 +37,8 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'success' => fn () => $request->session()->get('success'),
                 'error' => fn () => $request->session()->get('error'),
-                'mobile' => fn () => $request->session()->get('mobile'), // 👈 این خط اضافه شده
+                'mobile' => fn () => $request->session()->get('mobile'),
+                'mobile_verified' => fn () => $request->session()->get('mobile_verified'),
             ],
         ];
     }

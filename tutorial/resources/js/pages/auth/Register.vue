@@ -34,6 +34,7 @@ const submit = () => {
 <template>
     <GuestLayout>
         <Head title="Register" />
+        <p v-if="mobileVerified">شما با این شماره ثبت نام نکردید ابتدا ثبت نام کنید</p>
         <form @submit.prevent="submit">
             <div>
                 <InputLabel for="name" value="Name" />

@@ -21,9 +21,9 @@
 
   const sendCode = async () => {
     await axios.get('/sanctum/csrf-cookie')
-    await axios.post('/auth/send-code', { mobile: mobile.value })
+    await axios.post('/auth/send-code', { mobile: sendCodeForm.mobile })
     step.value = true
-    verifyCodeForm.mobile = mobile.value
+    verifyCodeForm.mobile = sendCodeForm.mobile
   }
 
   // متد تأیید کد
@@ -48,7 +48,7 @@
             id="mobile"
             type="text"
             class="mt-1 block w-full"
-            v-model="mobile"
+            v-model="sendCodeForm.mobile"
             required
             autofocus
           />
