@@ -20,6 +20,7 @@
   })
 
   const sendCode = async () => {
+    await axios.get('/sanctum/csrf-cookie')
     await axios.post('/auth/send-code', { mobile: mobile.value })
     step.value = true
     verifyCodeForm.mobile = mobile.value

@@ -5,9 +5,9 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
-import { onMounted } from 'vue'
-const page = usePage();
-console.log('props.flash:', page.props.flash); 
+import { onMounted ,ref } from 'vue'
+const mobileVerified=ref(false);
+const page = usePage(); 
 const form = useForm({
     name: '',
     email: '',
@@ -16,10 +16,12 @@ const form = useForm({
     password_confirmation: '',
 });
 onMounted(() => {
-    console.log('FLASH:', page.props.flash);
     const mobile = page.props.flash?.mobile
     if (mobile) {
         form.mobile = mobile
+    }
+    if (page.props.flash.mobile_verified) {
+        mobileVerified.value = true
     }
 });
 const submit = () => {
@@ -53,7 +55,7 @@ const submit = () => {
                     type="text"
                     class="mt-1 block w-full"
                     v-model="form.mobile"
-                    :disabled="!!form.mobile"
+                    :disabled="mobileVerified"
                     required
                     autocomplete="tel"
                 />

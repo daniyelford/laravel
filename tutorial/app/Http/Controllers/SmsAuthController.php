@@ -62,8 +62,10 @@ class SmsAuthController extends Controller
         Cache::forget('verify_attempts_' . $request->mobile);
         $user = User::where('mobile', $request->mobile)->first();
         if (!$user) {
-            \Log::info("د$request->mobile");
-            return redirect()->route('register')->with('mobile', $request->mobile);
+            return redirect()->route('register')->with([
+                'mobile' => $request->mobile,
+                'mobile_verified' => true,
+            ]);
         }
         Auth::login($user);
         return redirect()->intended('/dashboard');
