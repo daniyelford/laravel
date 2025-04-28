@@ -24,6 +24,7 @@ class SmsAuthController extends Controller
             'mobile' => 'required|regex:/^09\d{9}$/'
         ]);
         $mobile = $request->mobile;
+        Verification::where('mobile', $mobile)->delete();
         $key = "send-code-{$mobile}";
         if ($this->rateLimiter->tooManyAttempts($key, 2)) {
             throw ValidationException::withMessages([
