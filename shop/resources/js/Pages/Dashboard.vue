@@ -1,10 +1,10 @@
 <template>
-  <div class="dashboard">
-    <h2>داشبورد</h2>
-    <p>خوش آمدید 🎉</p>
-  </div>
+  <AppLayout>
+    <h2 class="text-2xl">خوش آمدید!</h2>
+    <p>اینجا پنل شماست.</p>
+  </AppLayout>
 </template>
 
 <script setup>
-// شاید بعداً دیتا بیاد، فعلاً چیزی لازم نیست
+  import AppLayout from '@/Layouts/AppLayout.vue'
 </script>
