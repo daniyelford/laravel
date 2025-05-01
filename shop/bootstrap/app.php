@@ -12,10 +12,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // $middleware->use([
-        //     EnsureUserIsAuthenticated::class,
-        // ]);
-        $middleware->append(EnsureUserIsAuthenticated::class);
+        // $middleware->use([EnsureUserIsAuthenticated::class,]);
+        // $middleware->append(EnsureUserIsAuthenticated::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

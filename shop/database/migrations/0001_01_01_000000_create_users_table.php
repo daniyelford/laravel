@@ -32,6 +32,7 @@ return new class extends Migration
         Schema::create('users_account', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_mobile_id')->constrained('users_mobile');
+            $table->string('image')->nullable();
             $table->decimal('mojodi_account', 15, 2)->default(0);
             $table->timestamps();
         });

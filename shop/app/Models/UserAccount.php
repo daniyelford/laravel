@@ -12,6 +12,7 @@ class UserAccount extends Model
     protected $table = 'users_account';
     protected $fillable = [
         'user_mobile_id',
+        'image',
         'mojodi_account',
     ];
 

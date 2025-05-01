@@ -93,22 +93,30 @@ class LoginController extends Controller
         }
         session(['user_account_id' => $userAccount->id]);
         if (!empty($userMobile->user_id)) {
+            $user=User::find($userMobile->user_id);
+            if(!$user){
+                session(['user_account_id' => $userAccount->id]);
+                return Inertia::render('Register', [
+                    'mobile' => $add_mobile->id
+                ]);
+            }
             session(['login'=>true]);
+            auth()->login($user);
             return Inertia::render('Dashboard');
         }
         return Inertia::render('Register', [
             'mobile' => $userMobile->id,
         ]);
     }
-    
-    public function showLoginForm()
-    {
-        return Inertia::render('Login');
-    }
 
     public function showVerifyForm()
     {
-        return Inertia::render('VerifyCode');
+        return Inertia::render('Verify');
+    }
+
+    public function showLoginForm()
+    {
+        return Inertia::render('Login');
     }
 
     public function showRegisterForm()
@@ -118,13 +126,22 @@ class LoginController extends Controller
 
     public function registerRequest(Request $request)
     {
+        if(!(!empty(session('user_account_id')) && intval(session('user_account_id'))>0)){
+            return Inertia::render('login');
+        }
+        $account=UserAccount::find(intval(session('user_account_id')));
         $request->validate([
             'name' => 'required|string|max:255',
             'family' => 'required|string|max:255',
             'mobile' => 'required|exists:users_mobile,id',
+            'image' => 'nullable|image|max:2048',
         ]);
+        $image = null;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image')->store('users', 'public');
+        }
         $userMobile = UsersMobile::find($request->mobile);
-        if (!$userMobile) {
+        if (!$userMobile || !$account) {
             return Inertia::render('Login', [
                 'errors' => ['code' => 'موبایل یافت نشد.']
             ]);
@@ -134,7 +151,11 @@ class LoginController extends Controller
             'family' => $request->family,
             'code_mely' => null,
         ]);
+        if(!empty($image)){
+            $account->update(['image'=>$image]);
+        }
         $userMobile->update(['user_id' => $user->id]);
+        auth()->login($user);
         session(['login'=>true]);
         return Inertia::render('dashboard');
     }
