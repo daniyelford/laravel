@@ -12,7 +12,7 @@ use Illuminate\Cache\RateLimiter;
 use App\Http\Controllers\Api\SmsController;
 use Inertia\Inertia;
 class LoginController extends Controller
-{
+{ 
     protected $rateLimiter;
     protected $smsService;
 
@@ -126,8 +126,15 @@ class LoginController extends Controller
 
     public function registerRequest(Request $request)
     {
-        if(!(!empty(session('user_account_id')) && intval(session('user_account_id'))>0)){
-            return Inertia::render('login');
+        $account = null;
+        if (session()->has('user_account_id') && intval(session('user_account_id')) > 0) {
+            $account = UserAccount::find(intval(session('user_account_id')));
+        }
+
+        if (!$account) {
+            return Inertia::render('Register', [
+                'errors' => ['code' => 'دسترسی نامعتبر است. لطفاً دوباره تلاش کنید.']
+            ]);
         }
         $account=UserAccount::find(intval(session('user_account_id')));
         $request->validate([

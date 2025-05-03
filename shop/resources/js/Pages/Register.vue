@@ -1,7 +1,7 @@
 <template>
   <div class="register-container">
     <h2>ثبت نام</h2>
-
+ 
     <form @submit.prevent="submitForm" enctype="multipart/form-data">
       <div v-if="mobile && verify">
         <input 

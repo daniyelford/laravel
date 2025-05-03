@@ -8,24 +8,25 @@ class EnsureUserIsAuthenticated
     public function handle(Request $request, Closure $next)
     {
         $exceptPaths = [
-            'login',
             '/',
-            'send-login-code',
+            'login',
+            'login/send-code',
+            'login/verify-code',
+            'login/resend-code',
             'verify',
-            'verify-code',
-            'register-request',
             'register',
+            'register-request',
             'webauthn/register',
             'webauthn/options',
             'webauthn/verify',
-            'webauthn/login',
             'webauthn/login/options',
             'webauthn/login/verify',
         ];
-        if ($request->is($exceptPaths) || $request->routeIs($exceptPaths)) {
-            return $next($request);
-        }
-        if (!auth()->check()) {
+        
+        if (session('login') !== true) {
+            if ($request->is($exceptPaths)) {
+                return $next($request);
+            }
             return redirect()->route('login');
         }
         return $next($request);
