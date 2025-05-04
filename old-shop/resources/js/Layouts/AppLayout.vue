@@ -16,6 +16,6 @@
   </template>
   
   <script setup>
-  import LogoutButton from '@/Components/LogoutButton.vue'
+  import LogoutButton from '../Components/LogoutButton.vue'
   </script>
   

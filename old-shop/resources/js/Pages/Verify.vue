@@ -9,11 +9,7 @@ const form = useForm({
 
 // تایید کد
 const submitForm = () => {
-  form.post('/login/verify-code', {
-    onSuccess: () => {
-      router.visit('/dashboard')
-    }
-  })
+  form.post('/login/verify-code')
 }
 
 // پیام موفقیت

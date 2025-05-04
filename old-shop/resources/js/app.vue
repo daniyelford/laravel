@@ -1,34 +1,12 @@
 <template>
   <div id="app">
-    <!-- Global Header can go here -->
-    <header>
-      <nav>
-        <ul>
-          <li><router-link to="/">Login</router-link></li>
-          <li><router-link to="/register">Register</router-link></li>
-          <li><router-link to="/verify">Verify</router-link></li>
-          <li><router-link to="/dashboard">Dashboard</router-link></li>
-        </ul>
-      </nav>
-    </header>
-    
-    <!-- Main content area that changes based on route -->
     <main>
       <router-view></router-view> <!-- This is where the routed components will be displayed -->
     </main>
-
-    <!-- Global Footer can go here -->
-    <footer>
-      <p>&copy; 2025 Your Company</p>
-    </footer>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'App',
-};
-</script>
+
 
 <style scoped>
 /* Global styles for your application */

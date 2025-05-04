@@ -146,7 +146,6 @@ class LoginController extends Controller
 
     public function registerRequest(Request $request)
     {
-        \Log::info("register 1");
         if (!(session()->has('login_mobile') && !empty(session('login_mobile'))  && 
         session()->has('user_account_id') && !empty(session('user_account_id')) &&
         session()->has('user_mobile_id') && !empty(session('user_mobile_id')))) {

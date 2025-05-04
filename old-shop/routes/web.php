@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserMobileController;
@@ -26,7 +25,7 @@ Route::post('/login/resend-code', [LoginController::class, 'sendLoginCode'])->na
 Route::get('/verify', [LoginController::class, 'showVerifyForm'])->name('verify');
 Route::get('/register', [LoginController::class, 'showRegisterForm'])->name('register');
 Route::post('/register/request', [LoginController::class, 'registerRequest'])->name('register.request');
-Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // WebAuthn Routes
 Route::get('/webauthn/register', function () {
@@ -47,7 +46,7 @@ Route::post('/webauthn/login/verify', [WebAuthnLoginController::class, 'login'])
 
 // Protected Routes
 Route::middleware([EnsureUserIsAuthenticated::class])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
 
     Route::apiResources([
         'users' => UserController::class,
