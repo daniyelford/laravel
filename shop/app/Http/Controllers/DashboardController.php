@@ -8,7 +8,9 @@ class DashboardController extends Controller
     public function index()
     {
         if (session()->has('user_account_id') && session('login') === true) {
-            return Inertia::render('dashboard');
+            return Inertia::render('Dashboard', [
+                'user' => auth()->user(),
+            ]);
         } else {
             return Inertia::render('Login');
         }

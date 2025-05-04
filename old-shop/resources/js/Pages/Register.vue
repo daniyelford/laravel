@@ -5,12 +5,13 @@ import { useForm, usePage, router } from '@inertiajs/vue3'
 // Props
 const { props } = usePage()
 const mobile = ref(props.mobile || '')
-
+const mobileId = ref(props.mobileId || '')
+const verify = ref(props.verify || false);
 // فرم ثبت نام
 const form = useForm({
   name: '',
   family: '',
-  mobile: mobile.value,
+  mobileId: mobileId.value,
   image: null,
 })
 
@@ -93,7 +94,7 @@ onMounted(() => {
     <h2>ثبت نام</h2>
 
     <form @submit.prevent="submitForm" enctype="multipart/form-data">
-      <div v-if="mobile">
+      <div v-if="mobile&&verify">
         <input 
           v-model="form.name" 
           type="text" 

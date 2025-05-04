@@ -48,7 +48,9 @@
   const family = ref('');
   const image = ref(null);
   const error = ref('');
+  const verify = ref(props.verify || false);
   const mobile = ref(props.mobile || '');
+  const mobileId = ref(props.mobileId || '');
 
   const handleImageUpload = (e) => {
     image.value = e.target.files[0];
@@ -59,7 +61,7 @@
       const formData = new FormData();
       formData.append('name', name.value);
       formData.append('family', family.value);
-      formData.append('mobile', mobile.value);
+      formData.append('mobileId', mobileId.value);
       if (image.value) {
         formData.append('image', image.value);
       }
@@ -69,9 +71,9 @@
           'Content-Type': 'multipart/form-data',
         },
       });
-
       window.location.href = '/dashboard';
     } catch (err) {
+      console.log(err.response.data);
       error.value = err.response?.data?.message || 'خطا در ثبت نام';
     }
   };

@@ -23,12 +23,7 @@ const form = useForm({
   mobile: '',
 })
 const submitForm = () => {
-  form.post('send-login-code', {
-    onSuccess: () => {
-      console.log('کد تایید ارسال شد')
-      window.location.href = '/verify'
-    }
-  })
+  form.post('send-login-code')
 }
 const showFingerprintLogin = ref(false)
 onMounted(async () => {
