@@ -4,6 +4,10 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\WebAuthn\WebAuthnLoginController;
+Route::post('webauthn/options', [WebAuthnLoginController::class, 'options'])->name('webauthn.options');
+Route::post('webauthn/login', [WebAuthnLoginController::class, 'login'])->name('webauthn.login');
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
