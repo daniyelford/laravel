@@ -3,8 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
-// use WebAuthn\WebAuthn;
-use Laragear\WebAuthn\Facades\WebAuthn;
 use App\Http\Controllers\{
     Users\Auth\LoginController,
     Users\Auth\LogoutController,
@@ -30,28 +28,68 @@ Route::post('/register-request', [LoginController::class, 'registerRequest'])->n
 Route::get('/webauthn/register', function () {
     return Inertia::render('WebAuthnRegister');
 })->name('webauthn.register');
-Route::post('/webauthn/options', function (Request $request, WebAuthn $webauthn) {
-    return $webauthn->generateCreate(
-        user: Auth::user(),
-        userVerification: 'required',
-    );
+
+
+use Laragear\WebAuthn\Assertion\Creator\AssertionCreator;
+
+Route::post('/webauthn/options', function () {
+    $creator = new AssertionCreator();
+    $result = $creator->through(Auth::user());
+    return response()->json($result);
 });
-Route::post('/webauthn/verify', function (Request $request, WebAuthn $webauthn) {
-    $webauthn->validateCreate($request);
+
+
+use Laragear\WebAuthn\Assertion\Validator\AssertionValidator;
+
+Route::post('/webauthn/verify', function (Request $request, AssertionValidator $validator) {
+    $validator = new AssertionValidator();
+    $result = $validator->through($request);
     return response()->json(['success' => true]);
 });
+
+
+// Route::post('/webauthn/options', function (Request $request, WebAuthn $webauthn) {
+//     return $webauthn->generateCreate(
+//         user: Auth::user(),
+//         userVerification: 'required',
+//     );
+// });
+
+// Route::post('/webauthn/verify', function (Request $request, WebAuthn $webauthn) {
+//     $webauthn->validateCreate($request);
+//     return response()->json(['success' => true]);
+// });
+
+
 Route::get('/webauthn/login', function () {
     return Inertia::render('WebAuthnLogin');
 })->name('webauthn.login');
-Route::post('/webauthn/login/options', function (Request $request, WebAuthn $webauthn) {
-    return $webauthn->generateRequest();
+
+
+Route::post('/webauthn/login/options', function (Request $request, Validator $validator) {
+    return $validator->generate();
 });
-Route::post('/webauthn/login/verify', function (Request $request, WebAuthn $webauthn) {
-    $user = $webauthn->validateRequest($request);
+
+Route::post('/webauthn/login/verify', function (Request $request, Validator $validator) {
+    $user = $validator->validate($request);
+
     Auth::login($user);
-    session(['login' => true]);
+
     return response()->json(['success' => true]);
 });
+
+
+// Route::post('/webauthn/login/options', function (Request $request, WebAuthn $webauthn) {
+//     return $webauthn->generateRequest();
+// });
+
+// Route::post('/webauthn/login/verify', function (Request $request, WebAuthn $webauthn) {
+//     $user = $webauthn->validateRequest($request);
+//     Auth::login($user);
+//     session(['login' => true]);
+//     return response()->json(['success' => true]);
+// });
+
 
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 Route::middleware([EnsureUserIsAuthenticated::class])->group(function () {
