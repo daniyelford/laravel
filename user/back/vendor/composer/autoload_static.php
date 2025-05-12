@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit81d356533c60c7859b46c12a2457e012
+class ComposerStaticInited85fc02fc502223a3e4df9491da48f4
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -533,27 +533,29 @@ class ComposerStaticInit81d356533c60c7859b46c12a2457e012
 
     public static $classMap = array (
         'App\\Http\\Controllers\\Api\\SmsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/SmsController.php',
-        'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
-        'App\\Http\\Controllers\\Auth\\LogoutController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LogoutController.php',
-        'App\\Http\\Controllers\\BardashtAzAccountController' => __DIR__ . '/../..' . '/app/Http/Controllers/BardashtAzAccountController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/DashboardController.php',
-        'App\\Http\\Controllers\\UserAccountController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserAccountController.php',
-        'App\\Http\\Controllers\\UserAddressController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserAddressController.php',
-        'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
-        'App\\Http\\Controllers\\UserMobileController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserMobileController.php',
-        'App\\Http\\Controllers\\VarizController' => __DIR__ . '/../..' . '/app/Http/Controllers/VarizController.php',
+        'App\\Http\\Controllers\\Users\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Users/Auth/LoginController.php',
+        'App\\Http\\Controllers\\Users\\Auth\\LogoutController' => __DIR__ . '/../..' . '/app/Http/Controllers/Users/Auth/LogoutController.php',
+        'App\\Http\\Controllers\\Users\\Auth\\WebAuthn\\WebAuthnLoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Users/Auth/WebAuthn/WebAuthnLoginController.php',
+        'App\\Http\\Controllers\\Users\\Auth\\WebAuthn\\WebAuthnRegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Users/Auth/WebAuthn/WebAuthnRegisterController.php',
+        'App\\Http\\Controllers\\Users\\BardashtAzAccountController' => __DIR__ . '/../..' . '/app/Http/Controllers/Users/BardashtAzAccountController.php',
+        'App\\Http\\Controllers\\Users\\UserAccountController' => __DIR__ . '/../..' . '/app/Http/Controllers/Users/UserAccountController.php',
+        'App\\Http\\Controllers\\Users\\UserAddressController' => __DIR__ . '/../..' . '/app/Http/Controllers/Users/UserAddressController.php',
+        'App\\Http\\Controllers\\Users\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Users/UserController.php',
+        'App\\Http\\Controllers\\Users\\UserMobileController' => __DIR__ . '/../..' . '/app/Http/Controllers/Users/UserMobileController.php',
+        'App\\Http\\Controllers\\Users\\VarizController' => __DIR__ . '/../..' . '/app/Http/Controllers/Users/VarizController.php',
         'App\\Http\\Controllers\\WebAuthn\\WebAuthnLoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/WebAuthn/WebAuthnLoginController.php',
         'App\\Http\\Controllers\\WebAuthn\\WebAuthnRegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/WebAuthn/WebAuthnRegisterController.php',
         'App\\Http\\Middleware\\EnsureUserIsAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/EnsureUserIsAuthenticated.php',
-        'App\\Models\\BardashtAzAccount' => __DIR__ . '/../..' . '/app/Models/BardashtAzAccount.php',
-        'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
-        'App\\Models\\UserAccount' => __DIR__ . '/../..' . '/app/Models/UserAccount.php',
-        'App\\Models\\UserAddress' => __DIR__ . '/../..' . '/app/Models/UserAddress.php',
-        'App\\Models\\UserCart' => __DIR__ . '/../..' . '/app/Models/UserCart.php',
-        'App\\Models\\UserMobile' => __DIR__ . '/../..' . '/app/Models/UserMobile.php',
-        'App\\Models\\Variz' => __DIR__ . '/../..' . '/app/Models/Variz.php',
-        'App\\Models\\Verification' => __DIR__ . '/../..' . '/app/Models/Verification.php',
+        'App\\Models\\Users\\BardashtAzAccount' => __DIR__ . '/../..' . '/app/Models/Users/BardashtAzAccount.php',
+        'App\\Models\\Users\\User' => __DIR__ . '/../..' . '/app/Models/Users/User.php',
+        'App\\Models\\Users\\UserAccount' => __DIR__ . '/../..' . '/app/Models/Users/UserAccount.php',
+        'App\\Models\\Users\\UserAddress' => __DIR__ . '/../..' . '/app/Models/Users/UserAddress.php',
+        'App\\Models\\Users\\UserCart' => __DIR__ . '/../..' . '/app/Models/Users/UserCart.php',
+        'App\\Models\\Users\\UserMobile' => __DIR__ . '/../..' . '/app/Models/Users/UserMobile.php',
+        'App\\Models\\Users\\Variz' => __DIR__ . '/../..' . '/app/Models/Users/Variz.php',
+        'App\\Models\\Users\\Verification' => __DIR__ . '/../..' . '/app/Models/Users/Verification.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Brick\\Math\\BigDecimal' => __DIR__ . '/..' . '/brick/math/src/BigDecimal.php',
@@ -6788,9 +6790,9 @@ class ComposerStaticInit81d356533c60c7859b46c12a2457e012
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit81d356533c60c7859b46c12a2457e012::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit81d356533c60c7859b46c12a2457e012::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit81d356533c60c7859b46c12a2457e012::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInited85fc02fc502223a3e4df9491da48f4::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInited85fc02fc502223a3e4df9491da48f4::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInited85fc02fc502223a3e4df9491da48f4::$classMap;
 
         }, null, ClassLoader::class);
     }
