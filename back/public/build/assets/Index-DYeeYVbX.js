@@ -1,1 +1,0 @@
-import{c as s,a as c,o as a}from"./main-C9U0vVzQ.js";const l=(t,e)=>{const o=t.__vccOpts||t;for(const[n,r]of e)o[n]=r;return o},d={name:"Index"};function p(t,e,o,n,r,f){return a(),s("div",null,e[0]||(e[0]=[c("h1",null,"Welcome to the frontend!",-1)]))}const u=l(d,[["render",p]]);export{u as default};

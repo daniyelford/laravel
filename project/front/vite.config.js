@@ -1,9 +1,7 @@
-import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import vueDevTools from 'vite-plugin-vue-devtools';
 import path from 'node:path';
-import fs from 'node:fs/promises';
+import fs from 'node:fs/promises'; // یادت نره اینو اضافه کنی!
 
 function MoveManifestPlugin(desiredManifestPath) {
   let outDir;
@@ -30,27 +28,20 @@ function MoveManifestPlugin(desiredManifestPath) {
 export default defineConfig({
   plugins: [
     vue(),
-    vueDevTools(),
-    MoveManifestPlugin('../back/public/build/manifest.json')
+    MoveManifestPlugin('../back/public/build/manifest.json') // اینجا اضافه شد 👈
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@': '/src',
     },
   },
-  optimizeDeps: {
-    include: ['src/main.js'],
-  },
   build: {
-    outDir: fileURLToPath(new URL('../back/public/build', import.meta.url)),
+    rollupOptions: {
+      input: 'src/main.js',
+    },
+    outDir: '../back/public/build',
     emptyOutDir: true,
     manifest: true,
     manifestFileName: 'manifest.json',
-    rollupOptions: {
-      input: {
-        app: fileURLToPath(new URL('./resources/js/app.js', import.meta.url)),
-      }
-    }
   },
-  publicDir: fileURLToPath(new URL('./public', import.meta.url)),
 });
