@@ -171,8 +171,37 @@ declare module '*.vue' {
 in terminal:
 cd front
 npm run build
-npm run dev
 
 in terminal:
 cd back
+
+composer require nwidart/laravel-modules
+php artisan vendor:publish --provider="Nwidart\Modules\LaravelModulesServiceProvider"
+php artisan module:make User
+php artisan module:make-model User User
+
+composer dump-autoload
+
 php artisan serv
+
+back/routes/web.php
+use Nwidart\Modules\Facades\Module;
+Module::load('User');
+
+back/composer.json
+"autoload": {
+  "psr-4": {
+      "App\\": "app/",
+      "Database\\Factories\\": "database/factories/",
+      "Database\\Seeders\\": "database/seeders/",
+      "Modules\\": "Modules/"
+  }
+},
+
+back/modules/Users/modules.json 
+"providers": [
+  "Modules\\User\\app\\Providers\\UserServiceProvider"
+],
+
+change all files namespaces in back/modules/Users/app folders
+
