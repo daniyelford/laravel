@@ -1,4 +1,3 @@
-<!-- front/src/App.vue -->
 <template>
   <component :is="Component" v-bind="props" />
 </template>

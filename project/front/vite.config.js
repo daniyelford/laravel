@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import path from 'node:path';
-import fs from 'node:fs/promises'; // یادت نره اینو اضافه کنی!
+import fs from 'node:fs/promises';
 
 function MoveManifestPlugin(desiredManifestPath) {
   let outDir;
@@ -28,7 +28,7 @@ function MoveManifestPlugin(desiredManifestPath) {
 export default defineConfig({
   plugins: [
     vue(),
-    MoveManifestPlugin('../back/public/build/manifest.json') // اینجا اضافه شد 👈
+    MoveManifestPlugin('../back/public/build/manifest.json')
   ],
   resolve: {
     alias: {
