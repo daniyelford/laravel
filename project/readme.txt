@@ -111,10 +111,10 @@ package.json in fornt must be:
 
 package.json in back must be:
 "scripts": {
-    "dev": "php artisan serve"
+    "dev":  "concurrently \"php artisan serve\" \"cd ../front && npm run dev\""
 },
 
-in web.php
+in back/routes/web.php
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 

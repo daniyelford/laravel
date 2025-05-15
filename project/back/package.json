@@ -2,7 +2,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "php artisan serve"
+        "dev":  "concurrently \"php artisan serve\" \"cd ../front && npm run dev\""
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",
