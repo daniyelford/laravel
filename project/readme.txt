@@ -180,9 +180,8 @@ php artisan vendor:publish --provider="Nwidart\Modules\LaravelModulesServiceProv
 php artisan module:make User
 
 php artisan module:make-model User User 
+php artisan module:make-model {ModelName} {ModuleName}
 php artisan module:make-migration create_users_table User
-or
-php artisan module:make-model User User -m (with migration)
 
 php artisan module:migrate
 
