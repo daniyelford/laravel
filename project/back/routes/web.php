@@ -9,3 +9,11 @@ Route::get('/', function () {
     return Inertia::render('Index');
 });
 // Module::load('User');
+Route::middleware('auth.user')->group(function () {
+    Route::get('/dashboard',function(){
+        return 'dashboard setting';
+    } 
+    // [DashboardController::class, 'index']
+    );
+});
+

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('user_addresses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_account_id')->constrained('users_account');
+            $table->foreignId('user_account_id')->constrained('users_account')->onDelete('cascade');
             $table->string('address');
             $table->string('code_posty');
             $table->decimal('lat', 10, 7);

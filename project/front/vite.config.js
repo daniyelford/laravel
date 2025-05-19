@@ -1,47 +1,55 @@
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import path from 'node:path';
-import fs from 'node:fs/promises';
+// front/viteConfigModule.config.js
 
-function MoveManifestPlugin(desiredManifestPath) {
-  let outDir;
-
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
+import fs from 'fs/promises'
+import { alias } from './vite.alias.js'
+import userConfig from '../back/Modules/User/vite.config.module.js'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+function MoveManifestPlugin(destPath) {
+  let outDir
   return {
     name: 'move-manifest',
     configResolved(config) {
-      outDir = config.build.outDir;
+      outDir = config.build.outDir
     },
     async writeBundle() {
-      const src = path.resolve(outDir, '.vite/manifest.json');
-      const dest = path.resolve(desiredManifestPath);
-
+      const src = path.resolve(outDir, '.vite/manifest.json')
+      const dest = path.resolve(destPath)
       try {
-        await fs.rename(src, dest);
-        console.log(`✔ manifest.json moved to: ${dest}`);
+        await fs.rename(src, dest)
+        console.log(`✔ manifest.json moved to: ${dest}`)
       } catch (err) {
-        console.error(`✘ Failed to move manifest: ${err.message}`);
+        console.error(`✘ Failed to move manifest: ${err.message}`)
       }
     }
-  };
+  }
 }
-
 export default defineConfig({
   plugins: [
     vue(),
-    MoveManifestPlugin('../back/public/build/manifest.json')
+    MoveManifestPlugin('../back/public/build/manifest.json'),
   ],
   resolve: {
     alias: {
-      '@': '/src',
-    },
+      ...alias,
+      ...(userConfig.resolve?.alias || {})
+    }
   },
   build: {
     rollupOptions: {
-      input: 'src/main.js',
+      input: {
+        main: path.resolve(__dirname, 'src/main.js'),
+        ...(userConfig.build?.rollupOptions?.input || {})
+      },
     },
-    outDir: '../back/public/build',
+    outDir: path.resolve(__dirname, '../back/public/build'),
     emptyOutDir: true,
     manifest: true,
     manifestFileName: 'manifest.json',
   },
-});
+})

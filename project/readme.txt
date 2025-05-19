@@ -182,6 +182,14 @@ php artisan module:make User
 php artisan module:make-model User User 
 php artisan module:make-model {ModelName} {ModuleName}
 php artisan module:make-migration create_users_table User
+or
+php artisan module:make-model {ModelName} {ModuleName} [option]
+php artisan module:make-model {ModelName} {ModuleName} -m
+
+php artisan module:make-controller AuthController User
+
+php artisan module:make-middleware EnsureUserAuthenticated User
+
 
 php artisan module:migrate
 

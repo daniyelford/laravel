@@ -1,17 +1,19 @@
 {
   "name": "front",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build"
   },
   "dependencies": {
-    "vue": "^3.5.14",
     "@inertiajs/inertia": "^0.11.1",
-    "@inertiajs/inertia-vue3": "^0.6.0"
+    "@inertiajs/inertia-vue3": "^0.6.0",
+    "laravel-vite-plugin": "^1.2.0",
+    "vue": "^3.5.14"
   },
   "devDependencies": {
-    "vite": "^6.3.5",
-    "@vitejs/plugin-vue": "^5.2.4"
+    "@vitejs/plugin-vue": "^5.2.4",
+    "vite": "^6.3.5"
   }
 }
