@@ -10,10 +10,10 @@ const runPython = async () => {
   }
   result.value = 'در حال دریافت اطلاعات...'
   try {
-    const res = await sendApi(JSON.stringify({
+    const res = await sendApi({
       action: 'run_python/instagram_bot',
       id : username.value
-    }))
+    })
     if (res.status==='success') {
       result.value = 'done';
     }

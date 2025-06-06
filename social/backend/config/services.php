@@ -34,5 +34,9 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'smsir' => [
+        'api_key' => env('SMSIR_API_KEY'),
+        'template_id' => env('SMSIR_TEMPLATE_ID'),
+    ],
 
 ];

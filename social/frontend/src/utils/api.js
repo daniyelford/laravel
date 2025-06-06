@@ -30,7 +30,7 @@ export async function sendApi(data = {}) {
         'X-API-KEY': API_SECRET_KEY,
         'X-CSRF-TOKEN': csrfToken,
       },
-      body: data
+      body: JSON.stringify(data)
     });
     const result = await response.json();
     if (result.code === 401 || result.message === 'توکن نامعتبر است') {
