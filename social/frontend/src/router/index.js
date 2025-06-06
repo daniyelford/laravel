@@ -5,7 +5,7 @@ import Dashboard from '@/Pages/Panel/Dashboard.vue'
 import Telagram from '@/Pages/Tooles/Telagram.vue'
 import Instagram from '@/Pages/Tooles/Instagram.vue'
 const routes = [
-  { path: '/', name: 'login', component: Login ,meta:{onlyAuth:true}},
+  { path: '/', name: 'login', component: Login ,meta:{onlyAuth:false}},
   { path: '/dashboard', name: 'dashboard', component: Dashboard },
   {path: '/telegram',name: 'telegram',component: Telagram},
   {path: '/instagram',name: 'instagram',component: Instagram},
