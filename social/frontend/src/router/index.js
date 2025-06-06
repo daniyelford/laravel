@@ -1,13 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { sendApi } from '@/utils/api'
 import Login from '@/Pages/Users/Login.vue'
-import Forgot from '@/Pages/Users/Forgot.vue'
 import Dashboard from '@/Pages/Panel/Dashboard.vue'
 import Telagram from '@/Pages/Tooles/Telagram.vue'
 import Instagram from '@/Pages/Tooles/Instagram.vue'
 const routes = [
   { path: '/', name: 'login', component: Login ,meta:{onlyAuth:true}},
-  { path: '/forgot', name: 'forgot', component: Forgot ,meta:{onlyAuth:true}},
   { path: '/dashboard', name: 'dashboard', component: Dashboard },
   {path: '/telegram',name: 'telegram',component: Telagram},
   {path: '/instagram',name: 'instagram',component: Instagram},
