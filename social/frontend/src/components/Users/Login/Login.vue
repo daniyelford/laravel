@@ -127,7 +127,7 @@
     button {
         width: 100%;
         padding: 10px;
-        margin: 10px 0 3px 0;
+        margin: 2px 0;
         background-color: #1452a1;
         color: white;
         font-weight: bolder;

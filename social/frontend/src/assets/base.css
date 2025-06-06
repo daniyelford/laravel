@@ -49,14 +49,6 @@
     --color-text: var(--vt-c-text-dark-2);
   }
 }
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  font-weight: normal;
-}
 @font-face {
   font-family: 'YekanBakh';
   src: url('fonts/YekanBakh-Regular.ttf') format('truetype');
@@ -73,7 +65,14 @@
   font-family: 'YekanBakh';
   src: url('fonts/YekanBakhRegular.otf') format('opentype');
 }
-
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+  font-family:'YekanBakh';
+}
 body {
   min-height: 100vh;
   color: var(--color-text);
@@ -82,7 +81,6 @@ body {
     color 0.5s,
     background-color 0.5s;
   line-height: 1.6;
-  font-family:'YekanBakh';
   font-size: 15px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

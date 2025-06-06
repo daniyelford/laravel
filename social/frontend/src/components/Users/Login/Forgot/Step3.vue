@@ -87,7 +87,7 @@
         background: #d3d3d385;
         width: 100%;
         padding: 8px;
-        margin: 5px 0 10px 0;
+        margin: 5px 0 15px 0;
         box-sizing: border-box;
         border: none;
         border-radius: 5px;
@@ -104,7 +104,7 @@
     button {
         width: 100%;
         padding: 10px;
-        margin: 5px 0 0 0;
+        margin: 2px 0;
         background-color: #1452a1;
         color: white;
         font-weight: bolder;
