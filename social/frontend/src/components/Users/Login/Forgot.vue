@@ -11,6 +11,7 @@
       :phone="phone"
       @success="goToStep3"
       @back="backToLogin"
+      @edit-phone="step = 1"
     />
     <ForgotStep3_ResetPassword
       v-if="step === 3"

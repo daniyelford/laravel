@@ -15,13 +15,21 @@
         required
         class="input"
       />
-      <button type="submit" :disabled="!canSubmit">{{ loading ? 'در حال ارسال...' : 'ارسال کد تایید' }}</button>
+      <button type="submit" :disabled="!canSubmit">
+        {{
+          loading
+            ? 'در حال ارسال...'
+            : remainingTime > 0
+            ? `ارسال مجدد (${remainingTime})`
+            : 'ارسال کد تایید'
+        }}
+      </button>
     </form>
     <button class="back" @click="$emit('back')">بازگشت به ورود</button>
   </div>
 </template>
 <script setup>
-  import { ref, watch ,computed } from 'vue'
+  import { ref, watch, computed, onMounted, onUnmounted } from 'vue'
   import { sendApi } from '@/utils/api'
   const props = defineProps({
     phone: String
@@ -30,6 +38,8 @@
   const localPhone = ref(props.phone || '')
   const error = ref('')
   const loading = ref(false)
+  const remainingTime = ref(0)
+  let interval = null
   watch(localPhone, val => {
     const onlyNumbers = val.replace(/\D/g, '')
     if (onlyNumbers !== val) {
@@ -37,12 +47,34 @@
     }
     localStorage.setItem('forgot_phone', onlyNumbers)
   })
-  const isPhoneValid = computed(() => {
-  const regex = /^[0-9]{11}$/
-    return regex.test(localPhone.value)
-  })
+  const isPhoneValid = computed(() => /^[0-9]{11}$/.test(localPhone.value))
   const canSubmit = computed(() => {
-    return isPhoneValid.value && !loading.value
+    return isPhoneValid.value && !loading.value && remainingTime.value === 0
+  })
+  const startTimer = () => {
+    const now = Date.now()
+    const expireTime = now + 30000 
+    localStorage.setItem('forgot_timer', expireTime)
+    updateRemainingTime()
+    interval = setInterval(updateRemainingTime, 1000)
+  }
+  const updateRemainingTime = () => {
+    const expireTime = parseInt(localStorage.getItem('forgot_timer') || 0)
+    const now = Date.now()
+    const diff = Math.ceil((expireTime - now) / 1000)
+    remainingTime.value = diff > 0 ? diff : 0
+
+    if (remainingTime.value <= 0 && interval) {
+      clearInterval(interval)
+      interval = null
+    }
+  }
+  onMounted(() => {
+    updateRemainingTime()
+    interval = setInterval(updateRemainingTime, 1000)
+  })
+  onUnmounted(() => {
+    if (interval) clearInterval(interval)
   })
   const sendResetCode = async () => {
     error.value = ''
@@ -57,6 +89,7 @@
         localStorage.setItem('forgot_step', '2')
         localStorage.setItem('forgot_phone', localPhone.value)
         emit('success', localPhone.value)
+        startTimer()
       } else {
         error.value = response.message || 'خطا در ارسال کد تایید'
       }

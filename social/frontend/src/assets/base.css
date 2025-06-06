@@ -57,6 +57,22 @@
   margin: 0;
   font-weight: normal;
 }
+@font-face {
+  font-family: 'YekanBakh';
+  src: url('fonts/YekanBakh-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'YekanBakh';
+  src: url('fonts/YekanBakh-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'YekanBakh';
+  src: url('fonts/YekanBakhBold.otf') format('opentype');
+}
+@font-face {
+  font-family: 'YekanBakh';
+  src: url('fonts/YekanBakhRegular.otf') format('opentype');
+}
 
 body {
   min-height: 100vh;
@@ -66,19 +82,7 @@ body {
     color 0.5s,
     background-color 0.5s;
   line-height: 1.6;
-  font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    'Fira Sans',
-    'Droid Sans',
-    'Helvetica Neue',
-    sans-serif;
+  font-family:'YekanBakh';
   font-size: 15px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

@@ -15,6 +15,7 @@
       />
       <button type="submit" :disabled="loading || code.length !== 6">{{ loading ? 'در حال بررسی...' : 'تایید کد' }}</button>
     </form>
+    <button class="edit" @click="editPhone">ویرایش شماره</button>
     <button class="back" @click="$emit('back')">بازگشت به ورود</button>
   </div>
 </template>
@@ -24,11 +25,14 @@
   const props = defineProps({
     phone: String
   })
-  const emit = defineEmits(['success', 'back'])
+  const emit = defineEmits(['success', 'back','edit-phone'])
   const code = ref('')
   const error = ref('')
   const loading = ref(false)
-
+  const editPhone = () => {
+    localStorage.setItem('forgot_step', '1')
+    emit('edit-phone') 
+  }
   const verifyCode = async () => {
     error.value = ''
     loading.value = true
@@ -56,6 +60,9 @@
   }
 </script>
 <style scoped>
+  .edit{
+    background-color: #ff8837;
+  }
   .back{
     color: rgb(44, 41, 41);
     background: #e8e8e8;
