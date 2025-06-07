@@ -27,8 +27,6 @@ class LoginHandler
         }
         session()->forget('id');
         Auth::logout();
-        session()->invalidate();
-        session()->regenerateToken();
         return ['status' => 'success'];
     }
     private function check_auth(){
