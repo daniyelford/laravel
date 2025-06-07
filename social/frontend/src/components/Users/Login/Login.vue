@@ -40,6 +40,7 @@
 <script setup>
     import { ref, watch, onMounted ,computed } from 'vue'
     import { sendApi } from '@/utils/api'
+    import router from '@/router'
     const phone = ref('')
     const password = ref('')
     const loading = ref(false)
@@ -84,8 +85,8 @@
                 localStorage.removeItem('activeForm')
                 localStorage.setItem('isLogin',true)
                 window.dispatchEvent(new Event("storage"))
-                window.location.reload();
-            } else {
+                router.push('/dashboard')
+              } else {
                 errorMessage.value = response.message || 'خطا در ورود'
             }
         } catch (err) {

@@ -21,6 +21,15 @@ class LoginHandler
         else
             return ['status'=>'error','massage'=>'invalid requst'];
     }
+    private function get_info(){
+        if (session()->has('id') && Auth::check()) {
+            $user = Auth::user();
+            if ($user) {
+                return ['status'=>'success','name'=>$user->name,'data'=>$user];
+            }
+        }
+        return ['status' => 'error'];
+    }
     private function logout(){
         if (!session()->has('id')) {
             return ['status' => 'success'];

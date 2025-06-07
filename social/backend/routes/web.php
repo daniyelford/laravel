@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 Route::get('/', function () {
     session()->put('api_key', bin2hex(random_bytes(16)));
@@ -19,7 +20,7 @@ Route::get('/create_token', function (Request $request) {
     $token = bin2hex(random_bytes(32));
     session()->put('token', $token);
     return response()->json(['token' => $token]);
-});
+})->withoutMiddleware([VerifyCsrfToken::class]);
 Route::post('/check_token', function (Request $request) {
     $authHeader = $request->header('Authorization');
     $apiKey = $request->header('X-API-KEY');
@@ -30,7 +31,7 @@ Route::post('/check_token', function (Request $request) {
         return response()->json(['status' => 'error', 'message' => 'توکن نامعتبر است']);
     }
     return app(ApiController::class)->handle($request);
-});
+})->withoutMiddleware([VerifyCsrfToken::class]);
 
 Route::fallback(function () {
     return view('welcome',['api_key'=>session('api_key')]);

@@ -17,15 +17,12 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   try {
     const meta = to.meta;
-    if (meta.mustLogin){
-      const result = await sendApi({action: "users_action/login_handler", handler:'check_auth'});
-      if (result.status === 'error'){
+    if (meta.mustLogin || meta.onlyAuth){
+      const res = await sendApi({action: "users_action/login_handler", handler:'check_auth'});
+      if (meta.mustLogin && res.status === 'error'){
         return next('/');
       }
-    }
-    if (meta.onlyAuth){
-      const res = await sendApi({action: "users_action/login_handler", handler:'check_auth'});
-      if (res.status === 'success'){
+      if (meta.onlyAuth && res.status === 'success'){
         return next('/dashboard');
       }
     }

@@ -1,17 +1,23 @@
 <template>
-  <a href="#" v-if="isLoggedIn" @click.prevent="logout">خروج</a>
-  <router-view />
+  <div v-if="isLoggedIn" class="nav">
+    <NavMenu @logout="logout" />
+  </div>
+  <div class="container">
+    <router-view />
+  </div>
 </template>
 <script>
   import { sendApi } from '@/utils/api'
+  import NavMenu from './components/Pages/NavMenu.vue'
   export default {
     name: "App",
+    components:{NavMenu},
     data() {
       return {
         isLoggedIn: false,
       }
     },
-    mounted() {
+    created() {
       this.checkLogin()
       window.addEventListener("storage", this.checkLogin)
     },
@@ -36,3 +42,17 @@
     }
   }
 </script>
+<style scoped>
+  .nav{
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    right: 0;
+    height: 60px;
+    box-shadow: 0 0 5px gray;
+  }
+  .container{
+    margin-top: 60px;
+    height: calc(100% - 60px);
+  }
+</style>

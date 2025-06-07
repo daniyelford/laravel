@@ -35,7 +35,7 @@
   .image {
     display: inline-block;
     width: 70% !important;
-    margin: 50px auto;
+    margin: 30px auto;
   }
   .image img {
     width: 95%;
@@ -49,7 +49,7 @@
     height: 400px;
     float: right;
     direction: rtl;
-    margin: 50px auto;
+    margin: 30px auto;
     padding: 20px;
     border: none;
     border-radius: 10px;
