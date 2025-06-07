@@ -83,7 +83,9 @@
                 localStorage.removeItem('login_phone')
                 localStorage.removeItem('login_password')
                 localStorage.removeItem('activeForm')
-                router.push({ name: 'dashboard' })
+                localStorage.setItem('isLogin',true)
+                window.dispatchEvent(new Event("storage"))
+                router.push('/dashboard')
             } else {
                 errorMessage.value = response.message || 'خطا در ورود'
             }

@@ -22,7 +22,10 @@ class LoginHandler
             return ['status'=>'error','massage'=>'invalid requst'];
     }
     private function logout(){
-        session()->forget('token');
+        if (!session()->has('id')) {
+            return ['status' => 'success'];
+        }
+        session()->forget('id');
         Auth::logout();
         session()->invalidate();
         session()->regenerateToken();

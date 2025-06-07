@@ -23,11 +23,12 @@
         this.isLoggedIn = !!localStorage.getItem("isLogin")
       },
       async logout() {
-        localStorage.removeItem("isLogin")
-        this.isLoggedIn = false
         const res = await sendApi({ action: 'users_action/login_handler',handler:'logout' });
         if (res.status === 'success') {
-          this.$router.push("/login")
+          localStorage.removeItem("isLogin")
+          window.dispatchEvent(new Event("storage"))
+          this.isLoggedIn = false
+          this.$router.push("/")
         } else {
           alert('خطا در خروج از حساب');
         }
